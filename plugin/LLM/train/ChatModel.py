@@ -2,9 +2,6 @@ import os
 import torch
 from transformers import AutoConfig, AutoModel, AutoTokenizer
 
-import os
-import torch
-from transformers import AutoConfig, AutoModel, AutoTokenizer
 
 class ChatModel:
     def __init__(self, model_path, checkpoint_path, kernel_file="../quantization_kernels_parallel.so"):
