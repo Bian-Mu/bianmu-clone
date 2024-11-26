@@ -2,6 +2,8 @@ import os
 import torch
 from transformers import AutoConfig, AutoModel, AutoTokenizer
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 
 class ChatModel:
     def __init__(self, model_path, checkpoint_path, kernel_file="../quantization_kernels_parallel.so"):
@@ -16,7 +18,7 @@ class ChatModel:
         self.model = AutoModel.from_pretrained(self.model_path, kernel_file=self.kernel_file, config=self.config, trust_remote_code=True)
 
         # 加载prefix_encoder的权重
-        prefix_state_dict = torch.load(os.path.join(self.checkpoint_path, "pytorch_model.bin"))
+        prefix_state_dict = torch.load(os.path.join(self.checkpoint_path, "pytorch_model.bin"),map_location=device)
         new_prefix_state_dict = {}
         for k, v in prefix_state_dict.items():
             new_prefix_state_dict[k[len("transformer.prefix_encoder."):]] = v
@@ -26,7 +28,7 @@ class ChatModel:
 
         self.model = self.model.half().cuda()
         self.model.transformer.prefix_encoder.float()
-        
+        self.model.to(device)
         self.model = self.model.eval()
 
     def func_chat(self, input_text):
