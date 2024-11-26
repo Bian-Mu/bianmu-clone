@@ -14,3 +14,4 @@ cpm_kernels
 mdtex2html
 sentencepiece
 accelerate
+melobot[onebot]>=3.0.0rc13
