@@ -1,0 +1,5 @@
+.venv/
+plugin/LLM/*.so
+plugin/LLM/train/base_model/*.bin
+plugin/LLM/output/checkpoint-500/optimizer.pt
+plugin/LLM/output/checkpoint-500/pytorch_model.bin

@@ -1,0 +1,16 @@
+torch==2.1.2
+datasets
+fastapi==0.95.1
+uvicorn==0.22.0
+numpy<2.0.0
+bitsandbytes
+rouge_chinese 
+nltk 
+jieba
+tensorboardX
+protobuf
+transformers==4.27.1
+cpm_kernels
+mdtex2html
+sentencepiece
+accelerate
