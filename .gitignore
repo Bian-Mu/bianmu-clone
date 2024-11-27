@@ -5,4 +5,5 @@ plugin/LLM/output/checkpoint-500/optimizer.pt
 plugin/LLM/output/checkpoint-500/pytorch_model.bin
 **/__pycache__/
 Largrange/
-private/
+path.py
+test copy.py

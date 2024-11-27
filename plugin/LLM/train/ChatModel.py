@@ -1,12 +1,11 @@
 import os
 import torch
 from transformers import AutoConfig, AutoModel, AutoTokenizer
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 class ChatModel:
-    def __init__(self, model_path, checkpoint_path, kernel_file="../quantization_kernels_parallel.so"):
+    def __init__(self, model_path, checkpoint_path, kernel_file="/home/bianmu/self-proj/bianmu-clone/plugin/LLM/quantization_kernels_parallel.so"):
         
         self.model_path = model_path
         self.checkpoint_path = checkpoint_path
