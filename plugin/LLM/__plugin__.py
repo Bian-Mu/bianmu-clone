@@ -1,7 +1,6 @@
-from train.ChatModel import ChatModel
+from melobot import Plugin
+from .run import LLM_v1_Chat
 
-model_path = "./base_model"
-checkpoint_path = "../output/checkpoint-500"
-
-LLM=ChatModel(model_path=model_path,checkpoint_path=checkpoint_path)
-
+class LLM(Plugin):
+    version="1.0.0"
+    flows=[LLM_v1_Chat]
