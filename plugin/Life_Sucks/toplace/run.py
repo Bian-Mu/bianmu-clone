@@ -1,35 +1,43 @@
+import os
 from melobot import send_text
 from melobot.protocols.onebot.v11 import on_start_match
 from melobot.protocols.onebot.v11.adapter.event import MessageEvent
 import json    
-    
-from .apikey import key,http_head
 
 from .utils.divide import divide
 from .utils.load_dict import load_dict
 from .utils.fetch_url import fetch_url
+from ..ignore.run import Checker
 
-methods=["text?","around?"]
 #text为普通关键词搜索
 #around为hdu周边关键词搜索
+methods=["text?","around?"]
 
+
+base_dir = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(base_dir, "./src/apikey.json")
+with open(file_path, 'r', encoding='utf-8') as file:
+    path=json.load(file)
+
+
+#导入地点:adcode键值对
 dicts=load_dict()
 
-@on_start_match(".toplace")
+@on_start_match(".toplace",checker=Checker)
 async def go_to_someplace(event:MessageEvent):
     input=event.text.strip().removeprefix(".toplace")
     
     if "hdu" in input :
         place="keywords="+(input.replace("hdu","")).strip()
         hdu_location="location=120.34344,30.31526"
-        head=http_head+methods[1]
+        head=path["http_head"]+methods[1]
         
         isDistance=True
         
-        request=head+hdu_location+"&radius=3000&"+place+"&"+key
+        request=head+hdu_location+"&radius=3000&"+place+"&"+path["key"]
 
     else :
-        head=http_head+methods[0]
+        head=path["http_head"]+methods[0]
         isDistance=False
         
         [place,city]=divide(input)
@@ -39,7 +47,7 @@ async def go_to_someplace(event:MessageEvent):
                 adcode=str(dicts[city])
                 place="keywords="+place.strip()
             
-                request=head+"&"+place+"&region="+adcode+"&"+key
+                request=head+"&"+place+"&region="+adcode+"&"+path["key"]
                 
             else:
                 raise LookupError("Format Error")

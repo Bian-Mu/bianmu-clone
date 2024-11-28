@@ -1,6 +1,0 @@
-Load kernel : /home/bianmu/self-proj/bianmu-clone/plugin/LLM/quantization_kernels_parallel.so
-Setting CPU quantization kernel threads to 8
-Using quantization cache
-Applying quantization to glm layers
-Load kernel : /home/bianmu/self-proj/bianmu-clone/plugin/LLM/quantization_kernels_parallel.so
-Setting CPU quantization kernel threads to 8

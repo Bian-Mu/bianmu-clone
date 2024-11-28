@@ -5,7 +5,8 @@ plugin/LLM/output/checkpoint-500/optimizer.pt
 plugin/LLM/output/checkpoint-500/pytorch_model.bin
 **/__pycache__/
 Largrange/
-path.py
-apikey.py
+path.json
+apikey.json
 adcode.json
+list.json
 test copy.py

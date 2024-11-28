@@ -10,7 +10,7 @@ if __name__ == "__main__":
         .add_io(ForwardWebSocketIO("ws://127.0.0.1:8080"))
         .add_adapter(Adapter())
         .load_plugin("../plugin/Life_Sucks/sayhi")
-        .load_plugin("../plugin/Life_Sucks/toplace")
+        # .load_plugin("../plugin/Life_Sucks/toplace")
         # .load_plugin("../plugin/LLM")
         .run(debug=True)
     )
