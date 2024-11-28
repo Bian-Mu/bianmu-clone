@@ -16,3 +16,4 @@ sentencepiece
 accelerate
 melobot[onebot]>=3.0.0rc13
 setuptools
+httpx
