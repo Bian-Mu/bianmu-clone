@@ -15,5 +15,7 @@
 
 ## todolist
 
-1. 拉格朗日链接QQ
-2. 除了LLM外的所有功能
+1. 修复LLMbug
+2. Life_Sucks加几个功能
+3. Randomly_Speak
+4. Stalk_You
