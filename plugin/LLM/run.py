@@ -1,6 +1,9 @@
 import json
 import os
+import random
 from .train.ChatModel import ChatModel
+
+
 from melobot import send_text
 from melobot.protocols.onebot.v11 import on_message
 from melobot.protocols.onebot.v11.adapter.event import MessageEvent
@@ -17,9 +20,10 @@ LLM_v1 = ChatModel(model_path=path["model_path"], checkpoint_path=path["checkpoi
 
 @on_message()
 async def LLM_v1_Chat(event:MessageEvent)->None:
-    
-    LLM_v1_instance=LLM_v1
-    text=event.text.strip()
-    response=LLM_v1_instance.func_chat(text)
-    await send_text(response)
+    roll=random.randint(0,1119)
+    if roll<209:
+        LLM_v1_instance=LLM_v1
+        text=event.text.strip()
+        response=LLM_v1_instance.func_chat(text)
+        await send_text(response)
 
