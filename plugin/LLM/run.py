@@ -25,5 +25,6 @@ async def LLM_v1_Chat(event:MessageEvent)->None:
         LLM_v1_instance=LLM_v1
         text=event.text.strip()
         response=LLM_v1_instance.func_chat(text)
+        print("send_from_LLM")
         await send_text(response)
 
