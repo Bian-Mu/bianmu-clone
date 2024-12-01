@@ -68,4 +68,19 @@ async def go_to_someplace(event:MessageEvent):
         if result!=[]:
             await send_text("\n".join(result))
                 
+@on_start_match(".weather",checker=Checker)
+async def get_weather(event:MessageEvent):
+    input=event.text.strip().removeprefix(".weather")
+    
+    weather_head=path["http_head_weather"]
+    city=input.strip()
+    adcode=str(dicts[city])
+    request=weather_head+"city="+adcode+"&"+path["key"]
+    
+    if request:
+        response=(await fetch_url(request)).text
+        res_json=json.loads(response)
+        info=res_json["lives"][0]
+        result=["天气"+info["weather"],info["temperature"]+"摄氏度",info["winddirection"]+"风"+info["windpower"]+"级","湿度"+info["humidity"]]
+        await send_text(" ".join(result))
         

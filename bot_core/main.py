@@ -10,15 +10,17 @@ with open(file_path, 'r', encoding='utf-8') as file:
     config=json.load(file)
 
 
+
 if __name__ == "__main__":
-    logger = Logger(level=LogLevel.DEBUG)
+    logger_bug = Logger(level=LogLevel.DEBUG)
     (
-        Bot(__name__, logger=logger)
+        Bot(__name__, logger=logger_bug)
         .add_io(ForwardWebSocketIO(url=config["url"],access_token=config["access_token"]))
         .add_adapter(Adapter())
         .load_plugin("../plugin/Life_Sucks/pkq", depth)
         .load_plugin("../plugin/Life_Sucks/toplace",depth)
-        .load_plugin("../plugin/LLM")
+        # .load_plugin("../plugin/LLM",depth)
         .load_plugin("../plugin/Randomly_Speak",depth)
+        .load_plugin("../plugin/Life_Sucks/wordcloud",depth)
         .run(debug=True)
     )
