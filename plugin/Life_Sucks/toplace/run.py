@@ -74,13 +74,16 @@ async def get_weather(event:MessageEvent):
     
     weather_head=path["http_head_weather"]
     city=input.strip()
-    adcode=str(dicts[city])
-    request=weather_head+"city="+adcode+"&"+path["key"]
+
+    try: 
+        adcode=str(dicts[city])
+        request=weather_head+"city="+adcode+"&"+path["key"]
+    except:
+        await send_text("只能查xx/省/市/区/县哇")
     
     if request:
         response=(await fetch_url(request)).text
         res_json=json.loads(response)
         info=res_json["lives"][0]
-        result=["天气"+info["weather"],info["temperature"]+"摄氏度",info["winddirection"]+"风"+info["windpower"]+"级","湿度"+info["humidity"]]
+        result=["天气"+info["weather"],info["temperature"]+"℃",info["winddirection"]+"风"+info["windpower"]+"级","湿度"+info["humidity"]]
         await send_text(" ".join(result))
-        
