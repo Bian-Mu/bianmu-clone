@@ -13,6 +13,12 @@ with open(file_path, 'r', encoding='utf-8') as file:
 Checker=MsgChecker(LevelRole.NORMAL,list["owner"],list["super_users"],list["white_users"],list["black_users"],None)
 
 
+
+sniff_list_path=os.path.join(base_dir,"../../Stalk_You/sniff_list.json")
+with open(sniff_list_path,'r',encoding='utf-8') as f:
+    sniff_list=json.load(f)
+
+Sniff_Checker=MsgChecker(LevelRole.NORMAL,list["owner"],list["super_users"],sniff_list,None,None)
 # Matcher=StartMatcher(str,LogicMode.AND)
 
 async def isStartNotPoint(input:str):
