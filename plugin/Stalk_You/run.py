@@ -4,6 +4,9 @@ from melobot.protocols.onebot.v11 import Adapter
 import os,json
 
 from ..Life_Sucks.ignore.run import Sniff_Checker
+from .utils.add_sniff_db import add_sniff_db
+from .utils.del_sniff_db import del_sniff_db
+
 
 base_dir=os.path.dirname(os.path.abspath(__file__))
 list_path=os.path.join(base_dir,"./sniff_list.json")
@@ -18,6 +21,7 @@ async def start_stalk(event:GroupMessageEvent,adapter:Adapter):
             adapter.send_reply("已经被小狗记住了")
         else:
             sniff_list1.append(prey_qq)
+            add_sniff_db(prey_qq,"你好，小狗")
             adapter.send_reply("小狗很高兴认识你")
     
     with open(list_path,'w',encoding='utf-8') as f2:
@@ -31,6 +35,7 @@ async def refuse_stalk(event:GroupMessageEvent,adapter:Adapter):
         sniff_list2=json.load(f)
         if prey_qq in sniff_list2:
             sniff_list2.remove(prey_qq)
+            del_sniff_db(prey_qq)
             adapter.send_reply("你在小狗的剧本里杀青了")
         else:
             adapter.send_reply("你谁？（犬牙差互）")
@@ -38,7 +43,8 @@ async def refuse_stalk(event:GroupMessageEvent,adapter:Adapter):
     with open(list_path,'w',encoding="utf-8") as f2:
         json.dump(sniff_list2,f2,ensure_ascii=False)
         
+        
 @on_message(checker=Sniff_Checker)
 async def write_down_prey_sentence(event:GroupMessageEvent):
     prey_qq=event.user_id
-    
+    add_sniff_db(prey_qq,event.text.strip())
