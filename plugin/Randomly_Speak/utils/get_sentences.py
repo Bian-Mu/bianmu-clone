@@ -7,7 +7,7 @@ base_dir = os.path.dirname(os.path.abspath(__file__))
 def get_sentences(Year,Month):
     
     file_path = os.path.join(base_dir, f"../src/kx1/kx1_{Year}_{Month}.sqlite")
-    try:
+    if os.path.exists(file_path):
         conn = sqlite3.connect(file_path)
         cursor = conn.cursor()
         
@@ -27,7 +27,7 @@ def get_sentences(Year,Month):
         conn.close()
         return sentence[0]
 
-    except sqlite3.Error:
+    else:
         print(f"Database file {file_path} does not exist or is not accessible.")
         return "找不到记录..."
     

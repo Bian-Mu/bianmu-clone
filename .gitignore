@@ -8,5 +8,6 @@ plugin/LLM/data/
 Largrange/
 src/
 path.json
+sniff_list.json
 test copy.py
 test.py
