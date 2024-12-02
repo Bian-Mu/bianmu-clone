@@ -21,12 +21,13 @@ LLM_v1 = ChatModel(model_path=path["model_path"], checkpoint_path=path["checkpoi
 
 @on_message()
 async def LLM_v1_Chat(event:MessageEvent)->None:
-    text=event.text.strip()
-    if await isStartNotPoint(text):
-        roll=random.randint(0,1119)
-        if roll<119:
-            LLM_v1_instance=LLM_v1
-            response=LLM_v1_instance.func_chat(text)
-            Logger.info("send_from_LLM")
-            await send_text(response)
+    type=event.raw["message"][0]["type"]
+    if type=="text":
+        if await isStartNotPoint(event.text):
+            roll=random.randint(0,1119)
+            if roll<119:
+                LLM_v1_instance=LLM_v1
+                response=LLM_v1_instance.func_chat(event.text)
+                Logger.info("send_from_LLM")
+                await send_text(response)
 

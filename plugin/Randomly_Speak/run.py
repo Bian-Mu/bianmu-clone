@@ -11,22 +11,25 @@ from ..Life_Sucks.ignore.run import Checker,Logger,isStartNotPoint
 
 @on_message(checker=Checker)
 async def add_into_db(msg:MessageEvent):
-    text=msg.text
-    if await isStartNotPoint(text):
-        add_sentences(text)
+    type=msg.raw["message"][0]["type"]
+    if type=="text":
+        if await isStartNotPoint(msg.text):
+            add_sentences(msg.text)
+            Logger.info("add_into_db")
     
 
 @on_message(checker=Checker)
 async def get_from_db(msg:MessageEvent):
-    text=msg.text
-    if await isStartNotPoint(text):
-        length=len(msg.text)*10
-        month=random.randint(0,int(length/119))
+    type=msg.raw["message"][0]["type"]
+    if type=="text":
+        if await isStartNotPoint(msg.text):
+            length=len(msg.text)*10
+            month=random.randint(0,int(length/119))
     
-        if month>=1 and month<=12:
-            sentence=get_sentences(2024,12)
-            Logger.info("send_from_db")
-            await send_text(sentence)
+            if month>=1 and month<=12:
+                sentence=get_sentences(2024,12)
+                Logger.info("send_from_db")
+                await send_text(sentence)
         
         
         
