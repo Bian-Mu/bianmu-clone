@@ -11,5 +11,5 @@ async def USEHELP():
     ".sniff_me":"开始记录个人文字消息",
     ".forget_me":"清除记录的个人文字消息"
     }
-    help=[f"{command}:{intro}" for command,intro in use_json.items()]
+    help=[f"'{command}'：{intro}" for command,intro in use_json.items()]
     await send_text("\n".join(help))

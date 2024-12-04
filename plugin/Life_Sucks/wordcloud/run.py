@@ -25,10 +25,8 @@ wordcloud=WordCloud(
     height=600
 )
 
-stopwords = set([
-    "我", "你", "他", "她", "它", "我们", "你们", "他们", "这", "那", "的", "了", "在", "是", "和", "与", "有", "为", "对", "不", "会", "就", "也", "而", "可以","还","啊","吗","吧","什么","能","都","不能"
-])
-
+stoptxt_path=os.path.join(base_dir,"./src/chineseStopWords.txt")
+stopwords=[line.strip() for line in open(stoptxt_path,encoding="utf-8").readlines()]
 @on_full_match("本月词云")
 async def Group_wordcloud():
     currentYear=datetime.datetime.now().year
