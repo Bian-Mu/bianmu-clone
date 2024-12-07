@@ -35,8 +35,8 @@ async def get_from_db(msg:MessageEvent):
         
 @on_event(checker=Checker)
 async def put_off_send():
-    if random.randint(0,1119)>409:
+    if random.randint(0,1119)<=409:
         delay=random.randint(0,3600)
-        await asyncio.sleep(delay)
         Logger.info("send_from_db_put_off")
+        await asyncio.sleep(delay)
         await send_text(get_sentences(2024,12))

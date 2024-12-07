@@ -16,7 +16,7 @@ def color_choose(word,font_size,position,orientation,random_state=None,**kwargs)
     return random.choice(color_list)
 
 wordcloud=WordCloud(
-    background_color=None,
+    background_color="white",
     mode="RGBA",
     font_path=font_path,
     colormap=None,

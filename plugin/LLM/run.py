@@ -25,7 +25,7 @@ async def LLM_v1_Chat(event:MessageEvent)->None:
     if type=="text":
         if await isStartNotPoint(event.text):
             roll=random.randint(0,1119)
-            if roll<119:
+            if roll<19*len(str(event.text)):
                 LLM_v1_instance=LLM_v1
                 response=LLM_v1_instance.func_chat(event.text)
                 Logger.info("send_from_LLM")
