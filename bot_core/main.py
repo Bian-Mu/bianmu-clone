@@ -20,7 +20,7 @@ if __name__ == "__main__":
         .load_plugin("../plugin/USE_HELP")
         .load_plugin("../plugin/Life_Sucks/pkq", depth)
         .load_plugin("../plugin/Life_Sucks/toplace",depth)
-        .load_plugin("../plugin/LLM",depth)
+        # .load_plugin("../plugin/LLM",depth)
         .load_plugin("../plugin/Randomly_Speak",depth)
         .load_plugin("../plugin/Life_Sucks/wordcloud",depth)
         .load_plugin("../plugin/Stalk_You",depth)
