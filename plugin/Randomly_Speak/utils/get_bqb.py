@@ -11,7 +11,7 @@ async def get_bqb():
     with open(list_path,"r") as f:
         bqb_list=json.load(f)
     choice=random.randint(0,len(bqb_list))
-    bqb_path=os.path.join(base_dir,f"../src/bqb/image/{choice}")
+    bqb_path=os.path.join(base_dir,f"../src/bqb/image/{bqb_list[choice]}")
     with Image.open(bqb_path) as img:
         byte_io=io.BytesIO()
         img.save(byte_io, format='PNG') 

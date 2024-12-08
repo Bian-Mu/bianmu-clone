@@ -10,7 +10,7 @@ async def add_bqb(filename:str,url:str):
         bqb_list=json.load(f)
         if filename not in bqb_list:
             bqb_list.append(filename)
-            bqb_path=os.path.join(base_dir,f"../src/bqb/image/{filename}.jpg")
+            bqb_path=os.path.join(base_dir,f"../src/bqb/image/{filename}")
             async with httpx.AsyncClient() as client:
                 response = await client.get(url)
                 if response.status_code==200:

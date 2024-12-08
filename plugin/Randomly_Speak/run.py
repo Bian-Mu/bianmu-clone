@@ -1,5 +1,5 @@
 from melobot.protocols.onebot.v11.adapter.event import MessageEvent
-from melobot.protocols.onebot.v11.handle import on_message,on_event
+from melobot.protocols.onebot.v11.handle import on_message,on_event,on_contain_match
 from melobot import send_text,send_image
 import random
 import asyncio
@@ -25,7 +25,6 @@ async def add_into_db(msg:MessageEvent):
             await add_bqb(data["filename"],url)
             Logger.info("add_bqb")
             
-    
 
 @on_message(checker=Checker)
 async def get_from_db(msg:MessageEvent):
@@ -39,16 +38,43 @@ async def get_from_db(msg:MessageEvent):
                 sentence=get_sentences(2024,12)
                 Logger.info("send_from_db")
                 await send_text(sentence)
-    elif random.randint(0,99)<9:
-            Logger.info("send_bqb")
-            bqb=get_bqb()
-            await send_image(name="喵喵喵喵～",raw=bqb,mimetype="image/png")
+
+@on_contain_match(["笑","草","无敌","吃","乐","？","了","去","6","绷"],checker=Checker)
+async def send_bqb():
+    if random.randint(0,99)<30:
+        Logger.info("send_bqb")
+        bqb=await get_bqb()
+        await send_image(name="喵喵喵喵～",raw=bqb,mimetype="image/png")
         
         
-@on_event(checker=Checker)
-async def put_off_send():
-    if random.randint(0,1119)<=409:
-        delay=random.randint(0,3600)
-        Logger.info("send_from_db_put_off")
-        await asyncio.sleep(delay)
-        await send_text(get_sentences(2024,12))
+isWait=False
+lock=asyncio.Lock()
+@on_message(checker=Checker)
+async def put_off_send(msg:MessageEvent):
+    global isWait
+    async with lock:
+        if (msg.user_id+random.randint(0,1119))%30<=11 and not isWait:
+            delay=random.randint(300,3600)
+            Logger.info(f"start_put_off_{delay}s")
+            isWait=True
+            await asyncio.sleep(delay)
+            await send_text(get_sentences(2024,12))
+            Logger.info("send_from_db_put_off")
+            isWait=False
+
+ifRepeated=False
+repeatWords=""
+lock2=asyncio.Lock()            
+@on_message(checker=Checker)
+async def repeat_speak(msg:MessageEvent):
+    global ifRepeated,repeatWords
+    async with lock2:
+        type=msg.raw["message"][0]["type"]
+        if type=="text":
+            if await isStartNotPoint(msg.text):
+                if repeatWords!=msg.text:
+                    repeatWords=msg.text
+                    ifRepeated=False
+                elif repeatWords==msg.text and not ifRepeated:
+                    await send_text(repeatWords)
+                    ifRepeated=True
