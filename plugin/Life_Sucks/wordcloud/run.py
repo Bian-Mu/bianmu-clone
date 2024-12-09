@@ -7,7 +7,7 @@ from melobot.protocols.onebot.v11 import on_full_match
 from melobot import send_image
 from melobot.protocols.onebot.v11.adapter.event import GroupMessageEvent
 from melobot.protocols.onebot.v11 import Adapter
-
+from ..ignore.run import Logger
 base_dir=os.path.dirname(os.path.abspath(__file__))
 
 font_path=os.path.join(base_dir,"./src/SimHei.ttf")
@@ -57,6 +57,7 @@ async def Group_wordcloud():
     raw_data=pic.read()
     
     await send_image(name="本月词云",raw=raw_data,mimetype="image/png")
+    Logger.info("wordcloud")
 
 
 @on_full_match("我的词云")
@@ -89,3 +90,5 @@ async def Solo_wordcloud(event:GroupMessageEvent,adapter:Adapter):
         await send_image(name="历史词云",raw=raw_data,mimetype="image/png")
     else:
         await adapter.send_reply("先sniff再慢慢认识嗷")
+        Logger.info("wordcloud")
+        

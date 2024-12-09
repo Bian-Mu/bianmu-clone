@@ -7,7 +7,7 @@ import json
 from .utils.divide import divide
 from .utils.load_dict import load_dict
 from .utils.fetch_url import fetch_url
-from ..ignore.run import Checker
+from ..ignore.run import Checker,Logger
 
 #text为普通关键词搜索
 #around为hdu周边关键词搜索
@@ -67,6 +67,7 @@ async def go_to_someplace(event:MessageEvent):
                 result.append(item["name"]+" "+item["address"])
         if result!=[]:
             await send_text("\n".join(result))
+            Logger.info("search_place")
                 
 @on_start_match(".weather",checker=Checker)
 async def get_weather(event:MessageEvent):
@@ -87,3 +88,4 @@ async def get_weather(event:MessageEvent):
         info=res_json["lives"][0]
         result=["天气"+info["weather"],info["temperature"]+"℃",info["winddirection"]+"风"+info["windpower"]+"级","湿度"+info["humidity"]]
         await send_text(" ".join(result))
+        Logger.info("search_weather")

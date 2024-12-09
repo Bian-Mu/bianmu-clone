@@ -14,10 +14,11 @@ from ..Life_Sucks.ignore.run import Checker,Logger,isStartNotPoint
 @on_message(checker=Checker)
 async def add_into_db(msg:MessageEvent):
     type=msg.raw["message"][0]["type"]
-    if type=="text":
+    if type=="text" and msg.is_group():
         if await isStartNotPoint(msg.text):
-            add_sentences(msg.text)
-            Logger.info("add_into_db")
+            if "词云" not in msg.text:
+                add_sentences(msg.text)
+                Logger.info("add_into_db")
     elif type=="image":
         data=msg.raw["message"][0]["data"]
         url=data["url"].replace(r"\\u0026",'&')
@@ -37,7 +38,8 @@ async def get_from_db(msg:MessageEvent):
             if month>=1 and month<=12:
                 sentence=get_sentences(2024,12)
                 Logger.info("send_from_db")
-                await send_text(sentence)
+                if "http" not in sentence:
+                    await send_text(sentence)
 
 @on_contain_match(["笑","草","无敌","吃","乐","？","了","去","6","绷"],checker=Checker)
 async def send_bqb():
@@ -78,5 +80,6 @@ async def repeat_speak(msg:MessageEvent):
                 elif repeatWords==msg.text and not ifRepeated:
                     if random.randint(0,3)<2:
                         await send_text(repeatWords)
+                        Logger.info("repeat_speak")
                         ifRepeated=True
                     
