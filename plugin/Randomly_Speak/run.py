@@ -41,7 +41,7 @@ async def get_from_db(msg:MessageEvent):
 
 @on_contain_match(["笑","草","无敌","吃","乐","？","了","去","6","绷"],checker=Checker)
 async def send_bqb():
-    if random.randint(0,99)<30:
+    if random.randint(0,99)<19:
         Logger.info("send_bqb")
         bqb=await get_bqb()
         await send_image(name="喵喵喵喵～",raw=bqb,mimetype="image/png")
@@ -76,5 +76,7 @@ async def repeat_speak(msg:MessageEvent):
                     repeatWords=msg.text
                     ifRepeated=False
                 elif repeatWords==msg.text and not ifRepeated:
-                    await send_text(repeatWords)
-                    ifRepeated=True
+                    if random.randint(0,3)<2:
+                        await send_text(repeatWords)
+                        ifRepeated=True
+                    
