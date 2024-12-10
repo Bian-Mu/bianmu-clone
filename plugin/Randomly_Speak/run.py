@@ -19,7 +19,7 @@ async def add_into_db(msg:MessageEvent):
             if "词云" not in msg.text:
                 add_sentences(msg.text)
                 Logger.info("add_into_db")
-    elif type=="image":
+    elif type=="image" and msg.user_id!=3961606442: #屏蔽奶龙爱好者
         data=msg.raw["message"][0]["data"]
         url=data["url"].replace(r"\\u0026",'&')
         if data["summary"]=="[动画表情]":
@@ -35,7 +35,7 @@ async def get_from_db(msg:MessageEvent):
             length=len(msg.text)*10
             month=random.randint(0,int(length/119))
     
-            if month>=1 and month<=12:
+            if month>=6 and month<=12:
                 sentence=get_sentences(2024,12)
                 Logger.info("send_from_db")
                 if "http" not in sentence:
@@ -43,11 +43,10 @@ async def get_from_db(msg:MessageEvent):
 
 @on_contain_match(["笑","草","无敌","吃","乐","？","了","去","6","绷"],checker=Checker)
 async def send_bqb():
-    if random.randint(0,99)<19:
-        Logger.info("send_bqb")
-        bqb=await get_bqb()
+    if random.randint(0,209)<19:
+        bqb,bqbid=await get_bqb()
         await send_image(name="喵喵喵喵～",raw=bqb,mimetype="image/png")
-        
+        Logger.info(f"send_bqb:{bqbid}")
         
 isWait=False
 lock=asyncio.Lock()
@@ -55,7 +54,7 @@ lock=asyncio.Lock()
 async def put_off_send(msg:MessageEvent):
     global isWait
     async with lock:
-        if (msg.user_id+random.randint(0,1119))%30<=11 and not isWait:
+        if (msg.user_id+random.randint(0,1119))%60<=11 and not isWait:
             delay=random.randint(300,3600)
             Logger.info(f"start_put_off_{delay}s")
             isWait=True
