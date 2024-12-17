@@ -24,5 +24,6 @@ if __name__ == "__main__":
         .load_plugin("../plugin/Randomly_Speak",depth)
         .load_plugin("../plugin/Life_Sucks/wordcloud",depth)
         .load_plugin("../plugin/Stalk_You",depth)
+        .load_plugin("../plugin/Life_Sucks/hate",depth)
         .run(debug=True)
     )

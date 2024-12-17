@@ -2,7 +2,7 @@ import json
 import os
 import random
 from .train.ChatModel import ChatModel
-from ..Life_Sucks.ignore.run import Logger,isStartNotPoint
+from ..Life_Sucks.ignore.run import Logger,isStartNotPoint,Checker
 
 from melobot import send_text
 from melobot.protocols.onebot.v11 import on_message
@@ -19,13 +19,13 @@ with open(file_path, 'r', encoding='utf-8') as file:
 LLM_v1 = ChatModel(model_path=path["model_path"], checkpoint_path=path["checkpoint_path"])
 
 
-@on_message()
+@on_message(checker=Checker)
 async def LLM_v1_Chat(event:MessageEvent)->None:
     type=event.raw["message"][0]["type"]
     if type=="text":
         if await isStartNotPoint(event.text):
             roll=random.randint(0,1119)
-            if roll<19*len(str(event.text)):
+            if roll<11*len(str(event.text)):
                 LLM_v1_instance=LLM_v1
                 response=LLM_v1_instance.func_chat(event.text)
                 Logger.info("send_from_LLM")

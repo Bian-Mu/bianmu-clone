@@ -46,7 +46,7 @@ async def send_bqb():
     if random.randint(0,209)<19:
         bqb,bqbid=await get_bqb()
         await send_image(name="喵喵喵喵～",raw=bqb,mimetype="image/png")
-        Logger.info(f"send_bqb:{bqbid}")
+        Logger.info(f"send_bqb which id is {bqbid}")
         
 isWait=False
 lock=asyncio.Lock()

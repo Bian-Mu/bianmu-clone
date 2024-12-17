@@ -7,7 +7,7 @@ from melobot.protocols.onebot.v11 import on_full_match
 from melobot import send_image
 from melobot.protocols.onebot.v11.adapter.event import GroupMessageEvent
 from melobot.protocols.onebot.v11 import Adapter
-from ..ignore.run import Logger
+from ..ignore.run import Logger,Checker
 base_dir=os.path.dirname(os.path.abspath(__file__))
 
 font_path=os.path.join(base_dir,"./src/SimHei.ttf")
@@ -27,7 +27,7 @@ wordcloud=WordCloud(
 
 stoptxt_path=os.path.join(base_dir,"./src/chineseStopWords.txt")
 stopwords=[line.strip() for line in open(stoptxt_path,encoding="utf-8").readlines()]
-@on_full_match("本月词云")
+@on_full_match("本月词云",checker=Checker)
 async def Group_wordcloud():
     currentYear=datetime.datetime.now().year
     currentMonth=datetime.datetime.now().month
@@ -60,7 +60,7 @@ async def Group_wordcloud():
     Logger.info("wordcloud")
 
 
-@on_full_match("我的词云")
+@on_full_match("我的词云",checker=Checker)
 async def Solo_wordcloud(event:GroupMessageEvent,adapter:Adapter):
     prey_qq=event.user_id
     file_path=os.path.join(base_dir,f"../../Stalk_You/src/{prey_qq}_db.sqlite")
